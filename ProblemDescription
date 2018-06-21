@@ -1,0 +1,19 @@
+Design and implement a simplified tracking and chatting system, where a server keeps track of the registered clients and provide necessary information for clients to directly send each other short messages when they come close.  You will implement a server program and a client program along with application layer protocol(s) to enable them to communicate.  The same client program will be executed several times to simulate different users. 
+The server program will serve client requests and maintain all the below mentioned information about each active client in a linked list. (Note that Java RMI automatically uses multiple threads to process requests originating from different clients.) 
+Each client will connect to the server and register itself by reporting its initial (x,y) location along with other information such as name, age etc. The server will assign a unique ID to each client and send this ID to the client.  Extra Credits: The client program should be able to get the short messages that might be sent by other clients (peers) and print them on the screen. So the client program should also register the additional information (Remote Object Reference) that makes this possible to the server and server should maintain that information too. 
+After the registration step, the server program will wait for clients’ requests and accordingly respond to them.
+A client's main thread can make the following requests (which are entered by the user running the client program): 
+1. go -50 30     : client wants to go 50m South and 30m East, server updates the location and reports the new location (go 40 -20 means go 40m North and 20m West) 
+2. get location  : client wants to know its current (x,y) location, server reports the current location of this client 
+3. list 30  : client wants to get the list of users within 30m, server determines  such clients/users within 30m of requesting client and send their information (user-id, name, age, additional info for extra credits) to the client, client keeps that list in a linked list and  prints their user-id, name, and age on the screen 
+4. send user-id  msg : (extra credits) client sends msg directly to user-id. Server not involved. 
+5. quit  : client leaves the system, server takes it out from the list 
+Clearly, there will be some shared resource at the server and/or client so you need to protect them and implement necessary synchronization mechanisms.  
+
+ 
+Run the rmiregistry and server program as follows: 
+rmiregistry [port] &  
+java server & 
+Run each client on a different window on the same host as follows: 
+java client –SH localhost -N name -L x y –A age 
+Note: Running both clients and servers on the same host is for the sake of simplicity. In practice, they can run on different hosts.
